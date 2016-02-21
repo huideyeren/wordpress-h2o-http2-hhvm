@@ -1,0 +1,49 @@
+version: '2'
+
+services:
+  db:
+    image: mysql:5.6
+    volumes:
+      - db-data:/var/lib/mysql
+    env_file: .env
+    networks:
+      - back
+
+  wordpress:
+    build: ./wordpress
+    volumes:
+      - hhvm-data:/srv/wordpress
+
+  hhvm:
+    image: yewton/hhvm
+    volumes:
+      - hhvm-data:/srv/wordpress
+    expose:
+      - "9000"
+    command: hhvm -m server -d hhvm.server.type=fastcgi -d hhvm.server.port=9000
+    env_file: .env
+    networks:
+      - front
+      - back
+
+  proxy:
+    build: ./nginx
+    volumes:
+      - hhvm-data:/srv/wordpress
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - front
+
+volumes:
+  hhvm-data:
+    driver: local
+  db-data:
+    driver: local
+
+networks:
+  front:
+    driver: bridge
+  back:
+    driver: bridge
