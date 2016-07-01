@@ -2,7 +2,7 @@ version: '2'
 
 services:
   db:
-    image: mysql:5.6
+    image: mariadb:latest
     volumes:
       - db-data:/var/lib/mysql
     env_file: .env
@@ -26,8 +26,8 @@ services:
       - front
       - back
 
-  proxy:
-    build: ./nginx
+  h2o:
+    build: ./h2o
     volumes:
       - hhvm-data:/srv/wordpress
     ports:
