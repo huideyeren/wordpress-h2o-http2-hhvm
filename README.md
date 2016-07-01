@@ -1,7 +1,7 @@
-wordpress-nginx-http2-hhvm
+wordpress-h2o-http2-hhvm
 ==========================
 
-Nginx with HTTP/2 + HHVM FastCGI + WordPress
+H2O with HTTP/2 + HHVM FastCGI + WordPress
 
 ## Usage ##
 
